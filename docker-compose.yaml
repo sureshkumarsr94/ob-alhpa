@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2020:2020"
+    environment:
+      - ENV=development
+      - APP_PORT=2020
+      - APP_HOST=localhost
+      - ENV_LOAD_METHOD=LOCAL
+      - ENV_LOAD_PATH=
+      - JWT_ACCESS_SIGN_KEY=greatest-secret-ever
+      - JWT_REFRESH_SIGN_KEY=greatest-secret-ever
+      - JWT_ISSUER=INFOPACK-OFFYBOX
+      - TENANT=OFFYBOX
+      - NEW_RELIC_LICENSE=
+      - DB_HOST=host.docker.internal
+      - DB_PORT=3306
+      - DB_DRIVER=mysql
+      - DB_USER=root
+      - DB_PASSWORD=nishanth
+      - DB_NAME=offybox
+    networks:
+      - app-network
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.test
+    networks:
+      - app-network
+
+networks:
+  app-network:
